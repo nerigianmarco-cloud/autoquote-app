@@ -45,21 +45,22 @@
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Intervento Richiesto</label>
                 <div class="relative">
                     <select id="intervento-select" class="w-full px-4 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-slate-50/50 font-semibold text-slate-700 transition-all cursor-pointer shadow-inner">
-                        <option disabled selected>Seleziona l'intervento...</option>
-                        <option>Tagliando Completo</option>
-                        <option>Sostituzione Frizione</option>
-                        <option>Cambio Pastiglie Freni</option>
-                        <option>Kit Distribuzione</option>
-                        <option>Ricarica Climatizzatore</option>
+                        <option value="" disabled selected>Seleziona l'intervento...</option>
+                        <option value="tagliando">Tagliando Completo</option>
+                        <option value="frizione">Sostituzione Frizione</option>
+                        <option value="freni">Cambio Pastiglie Freni</option>
+                        <option value="distribuzione">Kit Distribuzione</option>
+                        <option value="clima">Ricarica Climatizzatore</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-slate-400">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
+                <!-- Messaggio di errore nascosto -->
+                <p id="error-msg" class="text-red-500 text-xs font-bold mt-2 hidden text-center">Seleziona un intervento prima di cercare!</p>
             </div>
 
             <button id="search-btn" class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-lg py-4 px-4 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 overflow-hidden">
-                <!-- SVG Spinner (Nascosto di default) -->
                 <svg id="btn-spinner" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -68,104 +69,127 @@
             </button>
         </div>
 
-        <!-- Contenitore Risultati (Nascosto all'inizio con opacity-0 e translate-y-8 per l'effetto comparsa) -->
+        <!-- Contenitore Risultati Dinamici -->
         <div id="results-container" class="hidden opacity-0 translate-y-8 transition-all duration-500 ease-out">
-            <!-- Risultati Intestazione -->
             <div class="flex items-center justify-between mb-4 px-2">
                 <h2 class="text-lg font-bold text-slate-800 backdrop-blur-sm bg-white/50 px-3 py-1 rounded-xl">Offerte Consigliate</h2>
                 <span class="text-xs font-bold text-slate-600 bg-white/80 shadow-sm px-3 py-1 rounded-full backdrop-blur-sm">2 risultati</span>
             </div>
             
-            <!-- Risultato 1 -->
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-white/50 relative overflow-hidden group cursor-pointer">
-                <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
-                <div class="flex justify-between items-start pl-2">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <h3 class="font-bold text-slate-900 text-lg">Autofficina Rossi</h3>
-                            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Miglior Prezzo</span>
-                        </div>
-                        <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
-                            <span class="flex items-center gap-1 font-medium">📍 2.5 km</span>
-                            <span class="flex items-center gap-1 font-medium">⭐ 4.8</span>
-                        </div>
-                        <p class="text-xs text-emerald-600 font-bold flex items-center gap-1">
-                            ✓ Disponibilità immediata
-                        </p>
-                    </div>
-                    <div class="text-right flex flex-col justify-between h-full">
-                        <p class="text-2xl font-black text-slate-900">€ 280</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Risultato 2 -->
-            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-12 border border-white/50 relative overflow-hidden group cursor-pointer">
-                <div class="absolute top-0 left-0 w-1.5 h-full bg-slate-300 group-hover:bg-slate-400 transition-colors"></div>
-                <div class="flex justify-between items-start pl-2">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <h3 class="font-bold text-slate-900 text-lg">Garage Moderna</h3>
-                        </div>
-                        <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
-                            <span class="flex items-center gap-1 font-medium">📍 4.1 km</span>
-                            <span class="flex items-center gap-1 font-medium">⭐ 4.5</span>
-                        </div>
-                        <p class="text-xs text-slate-600 font-bold flex items-center gap-1">
-                            + Auto di cortesia inclusa
-                        </p>
-                    </div>
-                    <div class="text-right flex flex-col justify-between h-full">
-                        <p class="text-2xl font-black text-slate-900">€ 310</p>
-                    </div>
-                </div>
-            </div>
+            <!-- Qui verranno iniettati i risultati con JavaScript -->
+            <div id="results-list"></div>
         </div>
 
     </main>
 
-    <!-- Logica JavaScript per l'interattività -->
+    <!-- Logica JavaScript (Il "Cervello") -->
     <script>
-        // Quando la pagina ha finito di caricare...
+        // Il nostro mini-database con i prezzi e i dettagli dinamici
+        const databasePrezzi = {
+            "tagliando": [
+                { nome: "Autofficina Rossi", prezzo: "180", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Olio Castrol Edge incluso", color: "blue" },
+                { nome: "Garage Moderna", prezzo: "210", badge: "", km: "4.1", rating: "4.5", note: "+ Auto di cortesia inclusa", color: "slate" }
+            ],
+            "frizione": [
+                { nome: "Autofficina Rossi", prezzo: "450", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Pezzi originali garantiti", color: "blue" },
+                { nome: "Garage Moderna", prezzo: "490", badge: "", km: "4.1", rating: "4.5", note: "+ Auto di cortesia inclusa", color: "slate" }
+            ],
+            "freni": [
+                { nome: "Autofficina Rossi", prezzo: "85", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Disponibilità immediata", color: "blue" },
+                { nome: "Garage Moderna", prezzo: "110", badge: "Premium", km: "4.1", rating: "4.5", note: "+ Controllo dischi omaggio", color: "slate" }
+            ],
+            "distribuzione": [
+                { nome: "Autofficina Rossi", prezzo: "390", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Pompa acqua inclusa", color: "blue" },
+                { nome: "Garage Moderna", prezzo: "450", badge: "", km: "4.1", rating: "4.5", note: "+ Auto di cortesia inclusa", color: "slate" }
+            ],
+            "clima": [
+                { nome: "Autofficina Rossi", prezzo: "60", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Igienizzazione omaggio", color: "blue" },
+                { nome: "Garage Moderna", prezzo: "75", badge: "", km: "4.1", rating: "4.5", note: "+ Controllo perdite gas", color: "slate" }
+            ]
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             const searchBtn = document.getElementById('search-btn');
             const btnText = document.getElementById('btn-text');
             const btnSpinner = document.getElementById('btn-spinner');
             const resultsContainer = document.getElementById('results-container');
-            const targaInput = document.getElementById('targa-input');
+            const resultsList = document.getElementById('results-list');
+            const selectIntervento = document.getElementById('intervento-select');
+            const errorMsg = document.getElementById('error-msg');
 
             searchBtn.addEventListener('click', function() {
-                // Opzionale: un piccolo controllo per rendere l'esperienza migliore.
-                // Se la targa è vuota, potremmo fermarci qui, ma per ora facciamo finta di niente
-                // e mostriamo comunque la magia dell'animazione.
+                const tipoIntervento = selectIntervento.value;
 
-                // 1. Modifica lo stato del bottone (Caricamento in corso...)
+                // Controllo se l'utente ha scelto un intervento
+                if (!tipoIntervento) {
+                    errorMsg.classList.remove('hidden');
+                    return;
+                }
+                errorMsg.classList.add('hidden');
+
+                // 1. Stato di caricamento
                 searchBtn.disabled = true;
                 searchBtn.classList.add('opacity-80', 'cursor-not-allowed');
-                btnText.textContent = 'Ricerca in corso...';
+                btnText.textContent = 'Ricerca nel database...';
                 btnSpinner.classList.remove('hidden');
-
-                // 2. Nascondi i risultati se erano già visibili da una ricerca precedente
                 resultsContainer.classList.add('opacity-0', 'translate-y-8');
                 
-                // 3. Simula un ritardo di 1.5 secondi (il tempo di "cercare" nel database)
+                // 2. Simulazione connessione API (ritardo)
                 setTimeout(() => {
-                    // Ripristina il bottone
+                    // Ripristino bottone
                     searchBtn.disabled = false;
                     searchBtn.classList.remove('opacity-80', 'cursor-not-allowed');
                     btnText.textContent = 'Aggiorna Preventivi';
                     btnSpinner.classList.add('hidden');
 
-                    // 4. Mostra i risultati con l'animazione di scorrimento verso l'alto
+                    // 3. Generazione HTML dinamico in base alla scelta
+                    const offerte = databasePrezzi[tipoIntervento];
+                    let htmlCard = '';
+
+                    offerte.forEach((off, index) => {
+                        // Se è la prima card ha il bordino blu, altrimenti grigio
+                        const borderColor = index === 0 ? 'bg-blue-500' : 'bg-slate-300 group-hover:bg-slate-400';
+                        const noteColor = index === 0 ? 'text-emerald-600' : 'text-slate-600';
+                        
+                        let badgeHtml = '';
+                        if (off.badge) {
+                            badgeHtml = `<span class="bg-${off.color}-100 text-${off.color}-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">${off.badge}</span>`;
+                        }
+
+                        htmlCard += `
+                        <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-white/50 relative overflow-hidden group cursor-pointer">
+                            <div class="absolute top-0 left-0 w-1.5 h-full ${borderColor} transition-colors"></div>
+                            <div class="flex justify-between items-start pl-2">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-bold text-slate-900 text-lg">${off.nome}</h3>
+                                        ${badgeHtml}
+                                    </div>
+                                    <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
+                                        <span class="flex items-center gap-1 font-medium">📍 ${off.km} km</span>
+                                        <span class="flex items-center gap-1 font-medium">⭐ ${off.rating}</span>
+                                    </div>
+                                    <p class="text-xs ${noteColor} font-bold flex items-center gap-1">
+                                        ${off.note}
+                                    </p>
+                                </div>
+                                <div class="text-right flex flex-col justify-between h-full">
+                                    <p class="text-2xl font-black text-slate-900">€ ${off.prezzo}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+
+                    // Inserisce le nuove card nella pagina
+                    resultsList.innerHTML = htmlCard;
+
+                    // 4. Mostra i risultati con l'animazione fluida
                     resultsContainer.classList.remove('hidden');
-                    
-                    // Un piccolissimo ritardo per permettere al browser di registrare che l'elemento non è più "hidden"
-                    // prima di far partire l'animazione dell'opacità
                     setTimeout(() => {
                         resultsContainer.classList.remove('opacity-0', 'translate-y-8');
                     }, 50);
 
-                }, 1500); // 1500 millisecondi = 1.5 secondi
+                }, 1200); 
             });
         });
     </script>
