@@ -10,36 +10,44 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
+<body class="bg-slate-50 text-slate-800 antialiased relative min-h-screen z-0">
+
+    <!-- Sfondo Loghi Auto in Trasparenza (Watermark) -->
+    <!-- L'opacità è impostata al 4% (opacity-[0.04]) per un effetto filigrana elegante -->
+    <div class="fixed inset-0 z-[-1] opacity-[0.04] pointer-events-none" 
+         style="background-image: url('https://i.pinimg.com/originals/30/b0/02/30b0028e4ec2412803b9b47e8bbbaafc.jpg'); 
+                background-size: 400px; 
+                background-repeat: repeat;">
+    </div>
 
     <!-- Header Professionale -->
-    <header class="bg-slate-900 text-white pt-12 pb-20 px-6 rounded-b-[2.5rem] shadow-xl">
-        <div class="max-w-md mx-auto flex items-center justify-center gap-2 mb-2">
-            <!-- Icona Logo (Chiave inglese e ingranaggio minimal) -->
-            <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+    <header class="bg-slate-900 text-white pt-12 pb-20 px-6 rounded-b-[2.5rem] shadow-xl relative overflow-hidden">
+        <div class="max-w-md mx-auto flex items-center justify-center gap-3 mb-2 relative z-10">
+            <!-- Icona Logo SVG Pulita (Nessuna emoji) -->
+            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
             <h1 class="text-3xl font-bold tracking-tight">AutoQuote</h1>
         </div>
-        <p class="text-center text-slate-400 text-sm font-medium">Trasparenza e risparmio per la tua auto</p>
+        <p class="text-center text-slate-400 text-sm font-medium relative z-10">Trasparenza e risparmio per la tua auto</p>
     </header>
 
     <!-- Main Container -->
     <main class="max-w-md mx-auto px-4 -mt-12">
         
         <!-- Search Card -->
-        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8 border border-slate-100">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8 border border-slate-100">
             
             <div class="mb-5">
                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Targa Veicolo</label>
-                <input type="text" placeholder="Es. AB 123 CD" class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase font-mono text-lg text-center bg-slate-50 transition-all placeholder:text-slate-300 placeholder:font-sans" />
+                <input type="text" placeholder="ES. AB 123 CD" class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase font-mono text-lg text-center bg-slate-50 transition-all placeholder:text-slate-300 placeholder:font-sans" />
             </div>
 
             <div class="mb-6">
                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Intervento Richiesto</label>
                 <div class="relative">
-                    <select class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-slate-50 font-medium text-slate-700 transition-all">
+                    <select class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-slate-50 font-medium text-slate-700 transition-all cursor-pointer">
                         <option disabled selected>Seleziona l'intervento...</option>
                         <option>Tagliando Completo</option>
                         <option>Sostituzione Frizione</option>
@@ -47,8 +55,7 @@
                         <option>Kit Distribuzione</option>
                         <option>Ricarica Climatizzatore</option>
                     </select>
-                    <!-- Freccia custom per il select -->
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
@@ -67,13 +74,13 @@
         </div>
         
         <!-- Risultato 1 (Miglior Prezzo) -->
-        <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-slate-100 relative overflow-hidden group cursor-pointer">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-slate-100 relative overflow-hidden group cursor-pointer">
             <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
             <div class="flex justify-between items-start">
                 <div>
                     <div class="flex items-center gap-2 mb-1">
                         <h3 class="font-bold text-slate-900">Autofficina Rossi</h3>
-                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Miglior Prezzo</span>
+                        <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Miglior Prezzo</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
                         <span class="flex items-center gap-1"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 2.5 km</span>
@@ -90,7 +97,7 @@
         </div>
 
         <!-- Risultato 2 (Premium) -->
-        <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-8 border border-slate-100 relative overflow-hidden group cursor-pointer">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-12 border border-slate-100 relative overflow-hidden group cursor-pointer">
             <div class="absolute top-0 left-0 w-1 h-full bg-slate-300 group-hover:bg-slate-400 transition-colors"></div>
             <div class="flex justify-between items-start">
                 <div>
