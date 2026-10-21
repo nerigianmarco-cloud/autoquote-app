@@ -12,21 +12,24 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased relative min-h-screen z-0">
 
-    <!-- Sfondo Loghi Auto in Trasparenza (Watermark) -->
-    <!-- L'opacità è impostata al 4% (opacity-[0.04]) per un effetto filigrana elegante -->
-    <div class="fixed inset-0 z-[-1] opacity-[0.04] pointer-events-none" 
-         style="background-image: url('https://i.pinimg.com/originals/30/b0/02/30b0028e4ec2412803b9b47e8bbbaafc.jpg'); 
-                background-size: 400px; 
-                background-repeat: repeat;">
+    <!-- Sfondo Fotografico Trasparente (Sostituibile con i tuoi loghi) -->
+    <!-- Ho usato opacity-[0.06] per un effetto delicatissimo e grayscale per renderlo elegante -->
+    <div class="fixed inset-0 z-[-1] opacity-[0.08] grayscale mix-blend-multiply pointer-events-none" 
+         style="background-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920&q=80'); 
+                background-size: cover; 
+                background-position: center;
+                background-attachment: fixed;">
     </div>
 
     <!-- Header Professionale -->
     <header class="bg-slate-900 text-white pt-12 pb-20 px-6 rounded-b-[2.5rem] shadow-xl relative overflow-hidden">
         <div class="max-w-md mx-auto flex items-center justify-center gap-3 mb-2 relative z-10">
-            <!-- Icona Logo SVG Pulita (Nessuna emoji) -->
-            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <!-- Nuova Icona Profilo Auto Moderna -->
+            <svg class="w-9 h-9 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13.5V17a2 2 0 002 2h1a2 2 0 002-2v-1.5m10 0V17a2 2 0 002 2h1a2 2 0 002-2v-3.5"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 11l1.5-5h13L20 11H4z"></path>
+                <circle cx="7.5" cy="14.5" r="1.5"></circle>
+                <circle cx="16.5" cy="14.5" r="1.5"></circle>
             </svg>
             <h1 class="text-3xl font-bold tracking-tight">AutoQuote</h1>
         </div>
@@ -37,17 +40,17 @@
     <main class="max-w-md mx-auto px-4 -mt-12">
         
         <!-- Search Card -->
-        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8 border border-slate-100">
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-6 mb-8 border border-white/50">
             
             <div class="mb-5">
                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Targa Veicolo</label>
-                <input type="text" placeholder="ES. AB 123 CD" class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase font-mono text-lg text-center bg-slate-50 transition-all placeholder:text-slate-300 placeholder:font-sans" />
+                <input type="text" placeholder="ES. AB 123 CD" class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase font-mono text-lg text-center bg-slate-50/50 transition-all placeholder:text-slate-300 placeholder:font-sans shadow-inner" />
             </div>
 
             <div class="mb-6">
                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Intervento Richiesto</label>
                 <div class="relative">
-                    <select class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-slate-50 font-medium text-slate-700 transition-all cursor-pointer">
+                    <select class="w-full px-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-slate-50/50 font-medium text-slate-700 transition-all cursor-pointer shadow-inner">
                         <option disabled selected>Seleziona l'intervento...</option>
                         <option>Tagliando Completo</option>
                         <option>Sostituzione Frizione</option>
@@ -69,12 +72,12 @@
 
         <!-- Risultati Intestazione -->
         <div class="flex items-center justify-between mb-4 px-1">
-            <h2 class="text-lg font-bold text-slate-800">Offerte Consigliate</h2>
-            <span class="text-xs font-semibold text-slate-500 bg-slate-200 px-2 py-1 rounded-full">2 risultati</span>
+            <h2 class="text-lg font-bold text-slate-800 backdrop-blur-sm bg-white/50 px-3 py-1 rounded-lg">Offerte Consigliate</h2>
+            <span class="text-xs font-semibold text-slate-600 bg-white/80 shadow-sm px-2 py-1 rounded-full backdrop-blur-sm">2 risultati</span>
         </div>
         
         <!-- Risultato 1 (Miglior Prezzo) -->
-        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-slate-100 relative overflow-hidden group cursor-pointer">
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-white/50 relative overflow-hidden group cursor-pointer">
             <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
             <div class="flex justify-between items-start">
                 <div>
@@ -83,7 +86,7 @@
                         <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Miglior Prezzo</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
-                        <span class="flex items-center gap-1"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 2.5 km</span>
+                        <span class="flex items-center gap-1"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg> 2.5 km</span>
                         <span class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg> 4.8</span>
                     </div>
                     <p class="text-xs text-emerald-600 font-medium flex items-center gap-1">
@@ -97,7 +100,7 @@
         </div>
 
         <!-- Risultato 2 (Premium) -->
-        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-12 border border-slate-100 relative overflow-hidden group cursor-pointer">
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 mb-12 border border-white/50 relative overflow-hidden group cursor-pointer">
             <div class="absolute top-0 left-0 w-1 h-full bg-slate-300 group-hover:bg-slate-400 transition-colors"></div>
             <div class="flex justify-between items-start">
                 <div>
@@ -105,7 +108,7 @@
                         <h3 class="font-bold text-slate-900">Garage Moderna</h3>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
-                        <span class="flex items-center gap-1"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 4.1 km</span>
+                        <span class="flex items-center gap-1"><svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg> 4.1 km</span>
                         <span class="flex items-center gap-1"><svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg> 4.5</span>
                     </div>
                     <p class="text-xs text-slate-600 font-medium flex items-center gap-1">
