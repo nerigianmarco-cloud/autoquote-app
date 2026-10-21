@@ -12,8 +12,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased relative min-h-screen z-0">
 
-    <!-- Sfondo Trasparente - Opacità aumentata a 0.20 (20%) per farla vedere bene -->
-    <!-- Quando avrai caricato la tua foto, cambia l'URL qui sotto con 'skyline.jpg' -->
+    <!-- Sfondo Trasparente -->
     <div class="fixed inset-0 z-[-1] opacity-[0.20] pointer-events-none" 
          style="background-image: url('https://images.unsplash.com/photo-1614026480209-cd9934144671?auto=format&fit=crop&w=1920&q=80'); 
                 background-size: cover; 
@@ -21,10 +20,9 @@
                 background-attachment: fixed;">
     </div>
 
-    <!-- Header ad Alto Impatto (Niente icone, solo tipografia) -->
+    <!-- Header ad Alto Impatto -->
     <header class="bg-slate-900 text-white pt-16 pb-20 px-6 rounded-b-[2.5rem] shadow-2xl relative overflow-hidden">
         <div class="max-w-md mx-auto text-center mb-3 relative z-10">
-            <!-- Titolo con gradiente e font molto spesso -->
             <h1 class="text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-blue-400 via-blue-200 to-white drop-shadow-sm pb-1">
                 AutoQuote
             </h1>
@@ -36,17 +34,17 @@
     <main class="max-w-md mx-auto px-4 -mt-12">
         
         <!-- Search Card -->
-        <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-xl p-6 mb-8 border border-white/50">
+        <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-xl p-6 mb-8 border border-white/50 relative z-20">
             
             <div class="mb-5">
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Targa Veicolo</label>
-                <input type="text" placeholder="ES. AB 123 CD" class="w-full px-4 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase font-mono text-lg text-center bg-slate-50/50 transition-all placeholder:text-slate-300 placeholder:font-sans shadow-inner" />
+                <input type="text" id="targa-input" placeholder="ES. AB 123 CD" class="w-full px-4 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent uppercase font-mono text-lg text-center bg-slate-50/50 transition-all placeholder:text-slate-300 placeholder:font-sans shadow-inner" />
             </div>
 
             <div class="mb-6">
                 <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Intervento Richiesto</label>
                 <div class="relative">
-                    <select class="w-full px-4 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-slate-50/50 font-semibold text-slate-700 transition-all cursor-pointer shadow-inner">
+                    <select id="intervento-select" class="w-full px-4 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-slate-50/50 font-semibold text-slate-700 transition-all cursor-pointer shadow-inner">
                         <option disabled selected>Seleziona l'intervento...</option>
                         <option>Tagliando Completo</option>
                         <option>Sostituzione Frizione</option>
@@ -60,63 +58,116 @@
                 </div>
             </div>
 
-            <button class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-lg py-4 px-4 rounded-2xl transition-all duration-200 shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2">
-                Confronta Preventivi
+            <button id="search-btn" class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-lg py-4 px-4 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 overflow-hidden">
+                <!-- SVG Spinner (Nascosto di default) -->
+                <svg id="btn-spinner" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span id="btn-text">Confronta Preventivi</span>
             </button>
         </div>
 
-        <!-- Risultati Intestazione -->
-        <div class="flex items-center justify-between mb-4 px-2">
-            <h2 class="text-lg font-bold text-slate-800 backdrop-blur-sm bg-white/50 px-3 py-1 rounded-xl">Offerte Consigliate</h2>
-            <span class="text-xs font-bold text-slate-600 bg-white/80 shadow-sm px-3 py-1 rounded-full backdrop-blur-sm">2 risultati</span>
-        </div>
-        
-        <!-- Risultato 1 (Miglior Prezzo) -->
-        <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-white/50 relative overflow-hidden group cursor-pointer">
-            <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
-            <div class="flex justify-between items-start pl-2">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <h3 class="font-bold text-slate-900 text-lg">Autofficina Rossi</h3>
-                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Miglior Prezzo</span>
+        <!-- Contenitore Risultati (Nascosto all'inizio con opacity-0 e translate-y-8 per l'effetto comparsa) -->
+        <div id="results-container" class="hidden opacity-0 translate-y-8 transition-all duration-500 ease-out">
+            <!-- Risultati Intestazione -->
+            <div class="flex items-center justify-between mb-4 px-2">
+                <h2 class="text-lg font-bold text-slate-800 backdrop-blur-sm bg-white/50 px-3 py-1 rounded-xl">Offerte Consigliate</h2>
+                <span class="text-xs font-bold text-slate-600 bg-white/80 shadow-sm px-3 py-1 rounded-full backdrop-blur-sm">2 risultati</span>
+            </div>
+            
+            <!-- Risultato 1 -->
+            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-white/50 relative overflow-hidden group cursor-pointer">
+                <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-500"></div>
+                <div class="flex justify-between items-start pl-2">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h3 class="font-bold text-slate-900 text-lg">Autofficina Rossi</h3>
+                            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">Miglior Prezzo</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
+                            <span class="flex items-center gap-1 font-medium">📍 2.5 km</span>
+                            <span class="flex items-center gap-1 font-medium">⭐ 4.8</span>
+                        </div>
+                        <p class="text-xs text-emerald-600 font-bold flex items-center gap-1">
+                            ✓ Disponibilità immediata
+                        </p>
                     </div>
-                    <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
-                        <span class="flex items-center gap-1 font-medium">📍 2.5 km</span>
-                        <span class="flex items-center gap-1 font-medium">⭐ 4.8</span>
+                    <div class="text-right flex flex-col justify-between h-full">
+                        <p class="text-2xl font-black text-slate-900">€ 280</p>
                     </div>
-                    <p class="text-xs text-emerald-600 font-bold flex items-center gap-1">
-                        ✓ Disponibilità immediata
-                    </p>
-                </div>
-                <div class="text-right flex flex-col justify-between h-full">
-                    <p class="text-2xl font-black text-slate-900">€ 280</p>
                 </div>
             </div>
-        </div>
 
-        <!-- Risultato 2 (Premium) -->
-        <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-12 border border-white/50 relative overflow-hidden group cursor-pointer">
-            <div class="absolute top-0 left-0 w-1.5 h-full bg-slate-300 group-hover:bg-slate-400 transition-colors"></div>
-            <div class="flex justify-between items-start pl-2">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <h3 class="font-bold text-slate-900 text-lg">Garage Moderna</h3>
+            <!-- Risultato 2 -->
+            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-12 border border-white/50 relative overflow-hidden group cursor-pointer">
+                <div class="absolute top-0 left-0 w-1.5 h-full bg-slate-300 group-hover:bg-slate-400 transition-colors"></div>
+                <div class="flex justify-between items-start pl-2">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h3 class="font-bold text-slate-900 text-lg">Garage Moderna</h3>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
+                            <span class="flex items-center gap-1 font-medium">📍 4.1 km</span>
+                            <span class="flex items-center gap-1 font-medium">⭐ 4.5</span>
+                        </div>
+                        <p class="text-xs text-slate-600 font-bold flex items-center gap-1">
+                            + Auto di cortesia inclusa
+                        </p>
                     </div>
-                    <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
-                        <span class="flex items-center gap-1 font-medium">📍 4.1 km</span>
-                        <span class="flex items-center gap-1 font-medium">⭐ 4.5</span>
+                    <div class="text-right flex flex-col justify-between h-full">
+                        <p class="text-2xl font-black text-slate-900">€ 310</p>
                     </div>
-                    <p class="text-xs text-slate-600 font-bold flex items-center gap-1">
-                        + Auto di cortesia inclusa
-                    </p>
-                </div>
-                <div class="text-right flex flex-col justify-between h-full">
-                    <p class="text-2xl font-black text-slate-900">€ 310</p>
                 </div>
             </div>
         </div>
 
     </main>
 
+    <!-- Logica JavaScript per l'interattività -->
+    <script>
+        // Quando la pagina ha finito di caricare...
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('search-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnSpinner = document.getElementById('btn-spinner');
+            const resultsContainer = document.getElementById('results-container');
+            const targaInput = document.getElementById('targa-input');
+
+            searchBtn.addEventListener('click', function() {
+                // Opzionale: un piccolo controllo per rendere l'esperienza migliore.
+                // Se la targa è vuota, potremmo fermarci qui, ma per ora facciamo finta di niente
+                // e mostriamo comunque la magia dell'animazione.
+
+                // 1. Modifica lo stato del bottone (Caricamento in corso...)
+                searchBtn.disabled = true;
+                searchBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                btnText.textContent = 'Ricerca in corso...';
+                btnSpinner.classList.remove('hidden');
+
+                // 2. Nascondi i risultati se erano già visibili da una ricerca precedente
+                resultsContainer.classList.add('opacity-0', 'translate-y-8');
+                
+                // 3. Simula un ritardo di 1.5 secondi (il tempo di "cercare" nel database)
+                setTimeout(() => {
+                    // Ripristina il bottone
+                    searchBtn.disabled = false;
+                    searchBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                    btnText.textContent = 'Aggiorna Preventivi';
+                    btnSpinner.classList.add('hidden');
+
+                    // 4. Mostra i risultati con l'animazione di scorrimento verso l'alto
+                    resultsContainer.classList.remove('hidden');
+                    
+                    // Un piccolissimo ritardo per permettere al browser di registrare che l'elemento non è più "hidden"
+                    // prima di far partire l'animazione dell'opacità
+                    setTimeout(() => {
+                        resultsContainer.classList.remove('opacity-0', 'translate-y-8');
+                    }, 50);
+
+                }, 1500); // 1500 millisecondi = 1.5 secondi
+            });
+        });
+    </script>
 </body>
 </html>
