@@ -106,22 +106,21 @@
             </button>
         </div>
 
-        <!-- Box Targa Rilevata (Simulazione API Motorizzazione) -->
-        <div id="car-detected" class="hidden mb-6 bg-slate-800 text-white rounded-2xl p-4 shadow-lg flex items-center gap-3 border border-slate-700 transition-all duration-500 translate-y-4 opacity-0">
+        <!-- Box Targa Rilevata -->
+        <div id="car-detected" class="hidden mb-6 bg-slate-800 text-white rounded-2xl p-4 shadow-lg flex items-center gap-3 border border-slate-700 transition-all duration-500">
             <div class="bg-blue-500/20 p-2 rounded-lg">
                 <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div>
                 <p class="text-xs text-slate-400 uppercase font-bold tracking-wider">Veicolo Rilevato</p>
-                <p id="car-model-text" class="font-bold text-lg">BMW Serie 3 (F30) 2.0d</p>
+                <p id="car-model-text" class="font-bold text-lg"></p>
             </div>
         </div>
 
         <!-- Contenitore Risultati Dinamici -->
-        <div id="results-container" class="hidden opacity-0 translate-y-8 transition-all duration-500 ease-out">
+        <div id="results-container" class="hidden transition-all duration-500 ease-out">
             <div class="flex items-center justify-between mb-4 px-2">
                 <h2 class="text-lg font-bold text-slate-800 backdrop-blur-sm bg-white/50 px-3 py-1 rounded-xl">Offerte Consigliate</h2>
-                <span class="text-xs font-bold text-slate-600 bg-white/80 shadow-sm px-3 py-1 rounded-full backdrop-blur-sm">2 risultati</span>
             </div>
             <div id="results-list"></div>
         </div>
@@ -129,31 +128,6 @@
     </main>
 
     <script>
-        // Simulazione Listini (I prezzi futuri arriveranno dal backend in base al modello esatto)
-        const databasePrezzi = {
-            "tagliando": [{ nome: "Autofficina Rossi", prezzo: "220", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Olio specifico BMW", color: "blue" }, { nome: "Garage Moderna", prezzo: "250", badge: "", km: "4.1", rating: "4.5", note: "+ Auto di cortesia inclusa", color: "slate" }],
-            "revisione": [{ nome: "Garage Moderna", prezzo: "79", badge: "Tariffa Fissa", km: "4.1", rating: "4.5", note: "✓ Pratica ministeriale inclusa", color: "blue" }],
-            "checkup": [{ nome: "Autofficina Rossi", prezzo: "35", badge: "Promo", km: "2.5", rating: "4.8", note: "✓ 20 controlli visivi", color: "blue" }],
-            "distribuzione": [{ nome: "Autofficina Rossi", prezzo: "650", badge: "Specialisti", km: "2.5", rating: "4.8", note: "✓ Catena originale BMW", color: "blue" }, { nome: "Garage Moderna", prezzo: "710", badge: "", km: "4.1", rating: "4.5", note: "+ Garanzia 24 mesi", color: "slate" }],
-            "pompa_acqua": [{ nome: "Garage Moderna", prezzo: "180", badge: "", km: "4.1", rating: "4.5", note: "✓ Liquido radiatore incluso", color: "blue" }],
-            "fap": [{ nome: "Autofficina Rossi", prezzo: "250", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Lavaggio chimico FAP", color: "blue" }],
-            "candele": [{ nome: "Autofficina Rossi", prezzo: "120", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Candelette Bosch", color: "blue" }],
-            "marmitta": [{ nome: "Garage Moderna", prezzo: "190", badge: "", km: "4.1", rating: "4.5", note: "✓ Terminale omologato", color: "blue" }],
-            "frizione": [{ nome: "Autofficina Rossi", prezzo: "850", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Kit frizione + Volano bimassa", color: "blue" }],
-            "olio_cambio": [{ nome: "Garage Moderna", prezzo: "350", badge: "Specialisti", km: "4.1", rating: "4.5", note: "✓ Lavaggio ZF 8 Marce", color: "blue" }],
-            "freni_pastiglie": [{ nome: "Autofficina Rossi", prezzo: "130", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Sensori usura inclusi", color: "blue" }],
-            "freni_dischi": [{ nome: "Autofficina Rossi", prezzo: "380", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Dischi ventilati Brembo", color: "blue" }],
-            "ammortizzatori": [{ nome: "Garage Moderna", prezzo: "550", badge: "Consigliato", km: "4.1", rating: "4.5", note: "✓ Bilstein B4", color: "blue" }],
-            "braccetti": [{ nome: "Autofficina Rossi", prezzo: "280", badge: "", km: "2.5", rating: "4.8", note: "✓ Silent block inclusi", color: "blue" }],
-            "convergenza": [{ nome: "Autofficina Rossi", prezzo: "50", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Controllo laser 3D", color: "blue" }],
-            "clima": [{ nome: "Autofficina Rossi", prezzo: "70", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Gas R134a + Igienizzazione", color: "blue" }],
-            "batteria": [{ nome: "Garage Moderna", prezzo: "210", badge: "", km: "4.1", rating: "4.5", note: "✓ Batteria AGM per Start&Stop", color: "blue" }],
-            "alternatore": [{ nome: "Autofficina Rossi", prezzo: "450", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Rigenerato garantito", color: "blue" }],
-            "diagnosi": [{ nome: "Autofficina Rossi", prezzo: "30", badge: "Rapido", km: "2.5", rating: "4.8", note: "✓ Stampa e reset errori", color: "blue" }],
-            "parabrezza": [{ nome: "Garage Moderna", prezzo: "420", badge: "", km: "4.1", rating: "4.5", note: "✓ Calibrazione ADAS inclusa", color: "blue" }],
-            "lucidatura_fari": [{ nome: "Autofficina Rossi", prezzo: "60", badge: "Miglior Prezzo", km: "2.5", rating: "4.8", note: "✓ Applicazione trasparente UV", color: "blue" }]
-        };
-
         document.addEventListener('DOMContentLoaded', function() {
             const searchBtn = document.getElementById('search-btn');
             const btnText = document.getElementById('btn-text');
@@ -171,103 +145,89 @@
                 const tipoIntervento = selectIntervento.value;
                 const targa = targaInput.value.trim();
 
-                // Validazione form
                 let hasError = false;
-                if (!targa) {
-                    targaError.classList.remove('hidden');
-                    hasError = true;
-                } else {
-                    targaError.classList.add('hidden');
-                }
-
-                if (!tipoIntervento) {
-                    errorMsg.classList.remove('hidden');
-                    hasError = true;
-                } else {
-                    errorMsg.classList.add('hidden');
-                }
-
+                if (!targa) { targaError.classList.remove('hidden'); hasError = true; } else { targaError.classList.add('hidden'); }
+                if (!tipoIntervento) { errorMsg.classList.remove('hidden'); hasError = true; } else { errorMsg.classList.add('hidden'); }
                 if (hasError) return;
 
-                // Animazione di ricerca (Simulazione API Motorizzazione + Ricerca Database)
+                // 1. Prepariamo il bottone
                 searchBtn.disabled = true;
                 searchBtn.classList.add('opacity-80', 'cursor-not-allowed');
-                btnText.textContent = 'Interrogazione Motorizzazione...';
+                btnText.textContent = 'Connessione al server...';
                 btnSpinner.classList.remove('hidden');
-                
-                resultsContainer.classList.add('opacity-0', 'translate-y-8');
-                carDetectedBox.classList.add('opacity-0', 'translate-y-4');
-                setTimeout(() => { carDetectedBox.classList.add('hidden'); resultsContainer.classList.add('hidden'); }, 300);
-                
-                // Simula il tempo di risposta dell'API Targa
-                setTimeout(() => {
-                    // Logica finta: se la targa finisce con Fiat (o è corta), mostra Panda, altrimenti BMW.
-                    if (targa.toUpperCase().includes('FIAT') || targa.length < 5) {
-                        carModelText.textContent = "Fiat Panda 1.2 Fire (69cv)";
-                    } else {
-                        carModelText.textContent = "BMW Serie 3 (F30) 2.0 Diesel";
+
+                // 2. Nascondiamo i vecchi risultati
+                carDetectedBox.classList.add('hidden');
+                resultsContainer.classList.add('hidden');
+                resultsList.innerHTML = ''; // Svuota la lista precedente
+
+                // 3. CHIAMATA API 
+                fetch('http://localhost:8000/preventivi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ targa: targa, intervento: tipoIntervento })
+                })
+                .then(async response => {
+                    if (!response.ok) {
+                        const errText = await response.text();
+                        throw new Error(`Errore Server ${response.status}: ${errText}`);
                     }
+                    return response.json();
+                })
+                .then(data => {
+                    // Ripristino bottone
+                    searchBtn.disabled = false;
+                    searchBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                    btnText.textContent = 'Confronta Preventivi';
+                    btnSpinner.classList.add('hidden');
 
-                    // Mostra il veicolo rilevato
+                    // Mostriamo i dati
+                    carModelText.textContent = "Veicolo: " + data.targa_ricevuta;
                     carDetectedBox.classList.remove('hidden');
-                    setTimeout(() => {
-                        carDetectedBox.classList.remove('opacity-0', 'translate-y-4');
-                    }, 50);
 
-                    btnText.textContent = 'Calcolo listini ufficiali...';
+                    let htmlCard = '';
+                    data.risultati.forEach((off, index) => {
+                        const borderColor = index === 0 ? 'bg-blue-500' : 'bg-slate-300';
+                        const noteColor = index === 0 ? 'text-emerald-600' : 'text-slate-600';
+                        let badgeHtml = off.badge ? `<span class="bg-${off.color}-100 text-${off.color}-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">${off.badge}</span>` : '';
 
-                    // Simula il calcolo dei prezzi
-                    setTimeout(() => {
-                        searchBtn.disabled = false;
-                        searchBtn.classList.remove('opacity-80', 'cursor-not-allowed');
-                        btnText.textContent = 'Aggiorna Preventivi';
-                        btnSpinner.classList.add('hidden');
-
-                        const offerte = databasePrezzi[tipoIntervento] || [];
-                        let htmlCard = '';
-
-                        offerte.forEach((off, index) => {
-                            const borderColor = index === 0 ? 'bg-blue-500' : 'bg-slate-300 group-hover:bg-slate-400';
-                            const noteColor = index === 0 ? 'text-emerald-600' : 'text-slate-600';
-                            
-                            let badgeHtml = '';
-                            if (off.badge) {
-                                badgeHtml = `<span class="bg-${off.color}-100 text-${off.color}-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">${off.badge}</span>`;
-                            }
-
-                            htmlCard += `
-                            <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4 border border-white/50 relative overflow-hidden group cursor-pointer">
-                                <div class="absolute top-0 left-0 w-1.5 h-full ${borderColor} transition-colors"></div>
-                                <div class="flex justify-between items-start pl-2">
-                                    <div>
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <h3 class="font-bold text-slate-900 text-lg">${off.nome}</h3>
-                                            ${badgeHtml}
-                                        </div>
-                                        <div class="flex items-center gap-3 text-sm text-slate-500 mb-2">
-                                            <span class="flex items-center gap-1 font-medium">📍 ${off.km} km</span>
-                                            <span class="flex items-center gap-1 font-medium">⭐ ${off.rating}</span>
-                                        </div>
-                                        <p class="text-xs ${noteColor} font-bold flex items-center gap-1">
-                                            ${off.note}
-                                        </p>
+                        htmlCard += `
+                        <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-sm p-5 mb-4 border border-white/50 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1.5 h-full ${borderColor}"></div>
+                            <div class="flex justify-between items-start pl-2">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h3 class="font-bold text-slate-900 text-lg">${off.nome}</h3>
+                                        ${badgeHtml}
                                     </div>
-                                    <div class="text-right flex flex-col justify-between h-full">
-                                        <p class="text-2xl font-black text-slate-900">€ ${off.prezzo}</p>
-                                    </div>
+                                    <p class="text-xs ${noteColor} font-bold mt-2">${off.note}</p>
                                 </div>
-                            </div>`;
-                        });
+                                <div class="text-right">
+                                    <p class="text-2xl font-black text-slate-900">€ ${off.prezzo}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
 
-                        resultsList.innerHTML = htmlCard;
-                        resultsContainer.classList.remove('hidden');
-                        setTimeout(() => {
-                            resultsContainer.classList.remove('opacity-0', 'translate-y-8');
-                        }, 50);
-
-                    }, 1000); // Secondo ritardo (database)
-
-                }, 1200); // Primo ritardo (API Targa)
+                    resultsList.innerHTML = htmlCard;
+                    resultsContainer.classList.remove('hidden');
+                })
+                .catch(error => {
+                    // SE C'È UN ERRORE, LO STAMPIAMO A SCHERMO
+                    searchBtn.disabled = false;
+                    searchBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                    btnText.textContent = 'Riprova';
+                    btnSpinner.classList.add('hidden');
+                    
+                    carDetectedBox.classList.add('hidden');
+                    resultsList.innerHTML = `
+                        <div class="bg-red-100 text-red-700 p-5 rounded-2xl border border-red-200 shadow-sm mt-4">
+                            <h3 class="font-black text-lg mb-2">Connessione Fallita 🔌</h3>
+                            <p class="text-sm font-bold font-mono bg-white p-2 rounded-lg text-red-500 border border-red-100 break-words">${error.message}</p>
+                            <p class="text-xs mt-3 font-semibold">Possibile causa: il server Python è spento nel terminale. Torna su VS Code e avvia "sudo docker compose up".</p>
+                        </div>`;
+                    resultsContainer.classList.remove('hidden');
+                });
             });
         });
     </script>
